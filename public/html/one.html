@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #007bff;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white;
+        }
+        .container-custom {
+            padding-top: 50px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .info-section {
+            padding: 20px;
+            background-color: #e9ecef;
+        }
+        .info-section ol {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Currency Wallet</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="#ethereum-section">Ethereum</a>
+                    <a class="nav-link" href="#celo-section">Celo</a>
+                    <a class="nav-link" href="#bnb-section">BNB</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="ethereum-section" class="container-custom">
+        <h1 class="text-center">Ethereum</h1>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Manage Wallet</h2>
+                <form>
+                    <input type="text" class="form-control" id="eth-seed" placeholder="Enter Seed (12-words)">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateSeed('eth')">Create Wallet</button>
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateAddresses('eth')">Check Wallet</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Send Funds</h2>
+                <form>
+                    <input type="text" class="form-control" id="eth-sender" placeholder="Sender Address">
+                    <input type="text" class="form-control" id="eth-receive" placeholder="Receiver Address">
+                    <input type="text" class="form-control" id="eth-amount" placeholder="Currency Amount to Send">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="sendFunds('eth')">Send ETH</button>
+                </form>
+                <div class="alert alert-info" id="eth-sys-msg" style="margin-top: 10px;background-color: transparent; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 16px; color: black;" role="alert"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="celo-section" class="container-custom">
+        <h1 class="text-center">Celo</h1>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Manage Wallet</h2>
+                <form>
+                    <input type="text" class="form-control" id="celo-seed" placeholder="Enter Seed (12-words)">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateSeed('celo')">Create Wallet</button>
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateAddresses('celo')">Check Wallet</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Send Funds</h2>
+                <form>
+                    <input type="text" class="form-control" id="celo-sender" placeholder="Sender Address">
+                    <input type="text" class="form-control" id="celo-receive" placeholder="Receiver Address">
+                    <input type="text" class="form-control" id="celo-amount" placeholder="Currency Amount to Send">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="sendFunds('celo')">Send CELO</button>
+                </form>
+                <div class="alert alert-info" id="celo-sys-msg" style="margin-top: 10px;background-color: transparent; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 16px; color: black;" role="alert"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bnb-section" class="container-custom">
+        <h1 class="text-center">BNB</h1>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Manage Wallet</h2>
+                <form>
+                    <input type="text" class="form-control" id="bnb-seed" placeholder="Enter Seed (12-words)">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateSeed('bnb')">Create Wallet</button>
+                    <button type="button" class="btn btn-custom btn-lg" onclick="generateAddresses('bnb')">Check Wallet</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h2 class="text-center">Send Funds</h2>
+                <form>
+                    <input type="text" class="form-control" id="bnb-sender" placeholder="Sender Address">
+                    <input type="text" class="form-control" id="bnb-receive" placeholder="Receiver Address">
+                    <input type="text" class="form-control" id="bnb-amount" placeholder="Currency Amount to Send">
+                    <button type="button" class="btn btn-custom btn-lg" onclick="sendFunds('bnb')">Send BNB</button>
+                </form>
+                <div class="alert alert-info" id="bnb-sys-msg" style="margin-top: 10px;background-color: transparent; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 16px; color: black;" role="alert"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="info-section">
+        <div class="container">
+            <ol id="addresses"></ol>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eth-lightwallet@2.6.0/dist/lightwallet.min.js"></script>
+    <script>
+        function generateSeed(currency) {
+            // Generate seed functionality
+        }
+
+        function generateAddresses(currency) {
+            const seed = document.getElementById(`${currency}-seed`).value;
+            const password = "your_password"; // Replace with your password
+
+            lightwallet.keystore.createVault({
+                password: password,
+                seedPhrase: seed
+            }, function (err, ks) {
+                if (err) {
+                    document.getElementById(`${currency}-sys-msg`).innerHTML = err;
+                    return;
+                }
+
+                ks.keyFromPassword(password, function (err, pwDerivedKey) {
+                    if (err) {
+                        document.getElementById(`${currency}-sys-msg`).innerHTML = err;
+                        return;
+                    }
+
+                    ks.generateNewAddress(pwDerivedKey, 1);
+                    const addresses = ks.getAddresses();
+
+                    const infuraEndpoints = {
+                        eth: 'https://mainnet.infura.io/v3/your_infura_project_id',
+                        celo: 'https://forno.celo.org',
+                        bnb: 'https://bsc-dataseed.binance.org/'
+                    };
+
+                    const web3 = new Web3(new Web3.providers.HttpProvider(infuraEndpoints[currency]));
+
+                    web3.eth.getBlockNumber().then(function(blockNumber) {
+                        console.log("Current Block Number:", blockNumber);
+                        let addresses_list = "";
+
+                        addresses.forEach(address => {
+                            const private_key = ks.exportPrivateKey(address, pwDerivedKey);
+
+                            web3.eth.getBalance(address).then(balance => {
+                                addresses_list += `<li style='background:#FFFFFF; color:darkred; padding: 25px; margin-left: 100px;'>
+                                    <p style='border: 1px solid; font-size: 1.5rem; width:500px;'><b>Address: </b>${address}</p>
+                                    <p style='width:500px;'><b>Private Key: </b>0x${private_key}</p>
+                                    <p style='width:500px;'><b>Balance: </b>${web3.utils.fromWei(balance, "ether")} ${currency.toUpperCase()}</p>
+                                    <p style='width:500px;'><b>Current Block Number: </b>${blockNumber}</p>
+                                </li>`;
+
+                                document.getElementById("addresses").innerHTML = addresses_list;
+                            });
+                        });
+                    }).catch(error => {
+                        document.getElementById(`${currency}-sys-msg`).innerHTML = error;
+                    });
+                });
+            });
+        }
+
+        function sendFunds(currency) {
+            // Send funds functionality
+        }
+    </script>
+</body>
+</html>

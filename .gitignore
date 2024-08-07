@@ -1,0 +1,10 @@
+# Node modules
+node_modules/
+.vscode/
+
+# Environment files
+.env
+
+# Log files
+*.log
+
