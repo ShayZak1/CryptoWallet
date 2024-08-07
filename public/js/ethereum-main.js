@@ -55,7 +55,12 @@ function generate_addresses(seed) {
                 var addresses = ks.getAddresses();
 
                 var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55'));
-                var addresses_list = "";
+
+                if (!web3 || !web3.utils) {
+                    show_message("Web3 is not initialized properly.", "danger");
+                    console.error("Web3 is not initialized properly.");
+                    return;
+                }
 
                 Promise.all(addresses.map(function (address, index) {
                     return new Promise(function (resolve) {
@@ -127,6 +132,13 @@ function send_ether() {
             });
 
             var web3 = new Web3(provider);
+
+            if (!web3 || !web3.utils) {
+                show_message("Web3 is not initialized properly.", "danger");
+                console.error("Web3 is not initialized properly.");
+                return;
+            }
+
             var from = document.getElementById("sender").value;
             var to = document.getElementById("receive").value;
             var value = web3.utils.toWei(document.getElementById("ether").value, "ether");
