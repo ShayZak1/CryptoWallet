@@ -54,12 +54,26 @@ function generate_addresses(seed) {
                 ks.generateNewAddress(pwDerivedKey, total_addresses);
                 var addresses = ks.getAddresses();
 
+                // Initialize Web3
+                console.log("Initializing Web3...");
                 var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55'));
 
-                if (!web3 || !web3.utils) {
+                // Web3 Initialization Check
+                if (!web3) {
                     show_message("Web3 is not initialized properly.", "danger");
                     console.error("Web3 is not initialized properly.");
                     return;
+                } else {
+                    console.log("Web3 is initialized properly.");
+                }
+
+                // Check if Web3 utils are available
+                if (!web3.utils) {
+                    show_message("Web3 utils are not available.", "danger");
+                    console.error("Web3 utils are not available.");
+                    return;
+                } else {
+                    console.log("Web3 utils are available.");
                 }
 
                 Promise.all(addresses.map(function (address, index) {
@@ -133,10 +147,22 @@ function send_ether() {
 
             var web3 = new Web3(provider);
 
-            if (!web3 || !web3.utils) {
+            // Web3 Initialization Check
+            if (!web3) {
                 show_message("Web3 is not initialized properly.", "danger");
                 console.error("Web3 is not initialized properly.");
                 return;
+            } else {
+                console.log("Web3 is initialized properly.");
+            }
+
+            // Check if Web3 utils are available
+            if (!web3.utils) {
+                show_message("Web3 utils are not available.", "danger");
+                console.error("Web3 utils are not available.");
+                return;
+            } else {
+                console.log("Web3 utils are available.");
             }
 
             var from = document.getElementById("sender").value;
