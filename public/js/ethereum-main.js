@@ -2,82 +2,90 @@ var global_seed = undefined;
 
 // Generates a random 12-word seed and displays it in the seed element
 function generate_seed() {
-    var create_seed = lightwallet.keystore.generateRandomSeed();
-    document.getElementById("seed").value = create_seed;
-    generate_addresses(create_seed);
+    try {
+        var create_seed = lightwallet.keystore.generateRandomSeed();
+        document.getElementById("seed").value = create_seed;
+        generate_addresses(create_seed);
+    } catch (err) {
+        console.error('Error generating seed:', err);
+        show_message('Error generating seed: ' + err.message, 'danger');
+    }
 }
 
 var total_addresses = 0;
 
 // Generates addresses based on the given seed phrase
 function generate_addresses(seed) {
-    if (seed == undefined) {
-        seed = document.getElementById("seed").value;
-    }
+    try {
+        if (seed == undefined) {
+            seed = document.getElementById("seed").value;
+        }
 
-    if (!lightwallet.keystore.isSeedValid(seed)) {
-        show_message("Please enter a valid seed", "danger");
-        return;
-    }
-
-    global_seed = seed;
-    total_addresses = prompt("How many addresses do you want to generate?");
-    if (!Number.isInteger(parseInt(total_addresses))) {
-        show_message("Please enter a valid number of addresses", "danger");
-        return;
-    }
-
-    var password = Math.random().toString();
-
-    // Create a vault using the seed phrase
-    lightwallet.keystore.createVault({
-        password: password,
-        seedPhrase: seed,
-        hdPathString: "m/44'/60'/0'/0" // Ensure the derivation path is specified
-    }, function (err, ks) {
-        if (err) {
-            show_message(err.message || "Error creating vault", "danger");
+        if (!lightwallet.keystore.isSeedValid(seed)) {
+            show_message("Please enter a valid seed", "danger");
             return;
         }
 
-        ks.keyFromPassword(password, function (err, pwDerivedKey) {
+        global_seed = seed;
+        total_addresses = prompt("How many addresses do you want to generate?");
+        if (!Number.isInteger(parseInt(total_addresses))) {
+            show_message("Please enter a valid number of addresses", "danger");
+            return;
+        }
+
+        var password = Math.random().toString();
+
+        lightwallet.keystore.createVault({
+            password: password,
+            seedPhrase: seed,
+            hdPathString: "m/44'/60'/0'/0" // Ensure the derivation path is specified
+        }, function (err, ks) {
             if (err) {
-                show_message(err.message || "Error deriving key", "danger");
+                show_message(err.message || "Error creating vault", "danger");
                 return;
             }
 
-            ks.generateNewAddress(pwDerivedKey, total_addresses);
-            var addresses = ks.getAddresses();
+            ks.keyFromPassword(password, function (err, pwDerivedKey) {
+                if (err) {
+                    show_message(err.message || "Error deriving key", "danger");
+                    return;
+                }
 
-            var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55'));
-            var addresses_list = "";
+                ks.generateNewAddress(pwDerivedKey, total_addresses);
+                var addresses = ks.getAddresses();
 
-            // Fetch and display the balance for each address
-            Promise.all(addresses.map(function (address, index) {
-                return new Promise(function (resolve) {
-                    var private_key = ks.exportPrivateKey(address, pwDerivedKey);
-                    web3.eth.getBalance("0x" + address, function (error, balance) {
-                        if (error) {
-                            console.error("Error fetching balance:", error);
-                            balance = 0;
-                        }
+                var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55'));
+                var addresses_list = "";
 
-                        resolve(`
-                            <div class="address-item">
-                                <h4 class="mb-3">Address ${index + 1}</h4>
-                                <p><strong>Address:</strong> <span class="text-break">0x${address}</span></p>
-                                <p><strong>Private Key:</strong> <span class="text-break">0x${private_key}</span></p>
-                                <p><strong>Balance:</strong> ${web3.utils.fromWei(balance, "ether")} ETH</p>
-                            </div>
-                        `);
+                Promise.all(addresses.map(function (address, index) {
+                    return new Promise(function (resolve) {
+                        var private_key = ks.exportPrivateKey(address, pwDerivedKey);
+                        web3.eth.getBalance("0x" + address, function (error, balance) {
+                            if (error) {
+                                console.error("Error fetching balance:", error);
+                                balance = 0;
+                            }
+
+                            resolve(`
+                                <div class="address-item">
+                                    <h4 class="mb-3">Address ${index + 1}</h4>
+                                    <p><strong>Address:</strong> <span class="text-break">0x${address}</span></p>
+                                    <p><strong>Private Key:</strong> <span class="text-break">0x${private_key}</span></p>
+                                    <p><strong>Balance:</strong> ${web3.utils.fromWei(balance.toString(), "ether")} ETH</p>
+                                </div>
+                            `);
+                        });
                     });
+                })).then(function (addressItems) {
+                    document.getElementById("addresses").innerHTML = addressItems.join('');
+                    show_message(`Generated ${total_addresses} addresses successfully`, "success");
                 });
-            })).then(function (addressItems) {
-                document.getElementById("addresses").innerHTML = addressItems.join('');
-                show_message(`Generated ${total_addresses} addresses successfully`, "success");
             });
         });
-    });
+    } catch (err) {
+        console.error('Error generating addresses:', err);
+        show_message('Error generating addresses: ' + err.message, 'danger');
+    }
 }
 
 function send_ether() {
