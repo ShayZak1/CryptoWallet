@@ -21,9 +21,10 @@
       { "src": "/ethereum", "dest": "/public/html/ethereum.html" },
       { "src": "/celo", "dest": "/public/html/celo.html" },
       { "src": "/bnb", "dest": "/public/html/bnb.html" },
+      { "src": "/background3", "dest": "/public/html/background3.mp4" }
+
       { "src": "/arbitrum", "dest": "/public/html/arbitrum.html" },
       { "src": "/", "dest": "/public/html/ethereum.html" }
-      { "src": "/background3", "dest": "/public/html/background3.mp4" }
     ]
   }
   
