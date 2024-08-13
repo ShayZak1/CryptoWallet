@@ -14,7 +14,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "public/html/*",
+      "src": "public/html/*.mp4",
       "use": "@vercel/static"
     }
   ],
