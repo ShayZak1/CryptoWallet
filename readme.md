@@ -1,39 +1,56 @@
-# Project Name
+Project Overview
 
-Developed by Omri Gawi, Ofek Cohen, Omri Shalev
+# Project was developed by Shay Zak, Elroei Seadia, Michael Ioffe.
 
-## How to Run the Project:
+# Running the Project
 
-1. Open terminal as administrator.
-2. Navigate to the project directory.
-3. Run `npm install`.
-4. Run `node app`.
-5. In your web browser, connect to http://localhost:8080.
+**To run the project, follow these steps**:
 
-## How to Test the Project:
+1.  Open the terminal with administrator privileges.
+2.  Navigate to the project directory using cd path/to/project.
+3.  Execute the following command to install dependencies: ` npm install`
+4.  Start the application with: `node app`
+5.  Open your web browser and go to http://localhost:5000 to access the application.
 
-We have 3 types of currencies:
-1. **Ethereum**:
-   - Secret Phrase for ETH Wallet: `catalog cricket kitchen jump undo culture ask pigeon ski flash clog mail`
-   - Web3 + API Key and network: `https://goerli.infura.io/v3/753d2b335e85476cb9a17d5e2839d43d`
-   - Get faucet from: [Goerli Faucet](https://goerlifaucet.com/)
+# Accessing the Project Online
 
-2. **Celo**:
-   - Secret Phrase for Celo Wallet: `wise move dirt stairs boost alarm notable iron minor soul zoo chest`
-   - Web3 + API Key and network: `https://celo-alfajores.infura.io/v3/753d2b335e85476cb9a17d5e2839d43d`
-   - Get faucet from: [Celo Faucet](https://celo.org/developers/faucet)
+In addition to the local setup, the project is hosted online through Vercel, allowing you to explore its features without any installation. Simply visit the link below to access the application:
+https://crypto-wallet-two.vercel.app/
+This online version provides full functionality, and you can interact with it by entering your secret keys directly on the site, without the need for a development environment like Visual Studio Code.
+Testing the Project
+The project supports four types of cryptocurrencies: Ethereum, Celo, Arbitrum and BNB. Below are the details for each currency, including the wallet setup and faucet information.
 
-3. **BNB**:
-   - Secret Phrase for BNB Wallet: `else core engage service banner range cram wheat myth predict favorite enhance`
-   - Web3 + API Key and network: `https://go.getblock.io/b6fd4c3cbd3f4f78a1286cfd3fc284e0`
-   - Get faucet from: [BNB Faucet](https://www.bnbchain.org/en/testnet-faucet)
+1.**~Ethereum~**
+Secret Phrase for ETH Wallet: `spot wisdom tomato burden focus simple mammal cinnamon bicycle word vote original`
+Web3 + API Key and Network: `https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
+Faucet: Obtain test funds from: `https://cloud.google.com/application/web3/faucet/Ethereum`
 
-Each of the currencies contains at least two addresses with a positive balance so you can test the functionality of the project.
+2.**~Celo~**
+Secret Phrase for Celo Wallet:` city worth sound limit swim service audit poverty forward arrange axis program`
+Web3 + API Key and Network:
+`https://celo-alfajores.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
+Faucet: Obtain test funds from:
+`https://faucet.celo.org/alfajores`
 
-## Example of Sending Funds Between Two Addresses:
-1. Enter Seed (12-word).
-2. Press the "Check Wallet" button.
-3. Enter "2" in the pop-up message.
-Below the buttons, you will see the prints of the 2 addresses you requested.
-4. Under "Send funds," enter the receiver address and the sender address + the currency amount to send (make sure there are enough funds, if not generate faucet with the links above).
-5. Re-press "Check Wallet" and 2 addresses; you will see the new balances.
+3.**~BNB~**
+Secret Phrase for BNB Wallet: `gain define catch require library dirt scheme brush hope crush follow group`
+Web3 + API Key and Network:
+`https://bsc-testnet.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
+Faucet: Obtain test funds from:
+`https://www.bnbchain.org/en/testnet-faucet`
+
+4.**~Arbitrum~**
+Secret Phrase for ETH Wallet: `spin vocal tortoise chest ignore zoo chief celery diet engine auto divert`
+Web3 + API Key and Network:
+`https://arbitrum-sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
+Faucet: Obtain test funds from: `https://www.alchemy.com/faucets/arbitrum-sepolia`
+
+# Example: Sending Funds Between Two Addresses
+
+      1.Enter Seed: Input the 12-word secret phrase.
+      2.Check Wallet: Click the "Check Wallet" button.
+      3.Select Addresses: In the pop-up message, type "2" to request the addresses. The addresses and their balances will be displayed below the buttons.
+      4.Send Funds:
+      Enter the receiver's address.
+      Enter the sender's address and the amount of currency to send. Ensure the sender's wallet has sufficient funds; if not, use the faucets mentioned above.
+      5.Verify Balances: Click "Check Wallet" again to view the updated balances for the addresses.
