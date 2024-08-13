@@ -23,7 +23,7 @@
       { "src": "/bnb", "dest": "/public/html/bnb.html" },
       { "src": "/arbitrum", "dest": "/public/html/arbitrum.html" },
       { "src": "/", "dest": "/public/html/ethereum.html" }
-      { "src": "/", "dest": "/public/html/background3.mp4" }
+      { "src": "/background3", "dest": "/public/html/background3.mp4" }
     ]
   }
   
