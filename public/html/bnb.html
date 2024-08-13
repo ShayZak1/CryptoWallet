@@ -177,5 +177,18 @@
     <script src="/js/hooked-web3-provider.min.js"></script>
     <script src="/js/lightwallet.min.js"></script>
     <script src="/js/bnb-main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('myVideo');
+    
+            // Restart the video after 27 seconds
+            setInterval(function() {
+                if (video.currentTime >= 27) {
+                    video.currentTime = 0; // Restart the video
+                    video.play(); // Ensure the video continues playing
+                }
+            }, 1000); // Check every second
+        });
+    </script>
 </body>
 </html>
