@@ -20,26 +20,26 @@ This online version provides full functionality, and you can interact with it by
 Testing the Project
 The project supports four types of cryptocurrencies: Ethereum, Celo, Arbitrum and BNB. Below are the details for each currency, including the wallet setup and faucet information.
 
-1.**~Ethereum~**
+1.**Ethereum**
 Secret Phrase for ETH Wallet: `spot wisdom tomato burden focus simple mammal cinnamon bicycle word vote original`
 Web3 + API Key and Network: `https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
 Faucet: Obtain test funds from: `https://cloud.google.com/application/web3/faucet/Ethereum`
 
-2.**~Celo~**
+2.**Celo**
 Secret Phrase for Celo Wallet:` city worth sound limit swim service audit poverty forward arrange axis program`
 Web3 + API Key and Network:
 `https://celo-alfajores.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
 Faucet: Obtain test funds from:
 `https://faucet.celo.org/alfajores`
 
-3.**~BNB~**
+3.**BNB**
 Secret Phrase for BNB Wallet: `gain define catch require library dirt scheme brush hope crush follow group`
 Web3 + API Key and Network:
 `https://bsc-testnet.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
 Faucet: Obtain test funds from:
 `https://www.bnbchain.org/en/testnet-faucet`
 
-4.**~Arbitrum~**
+4.**Arbitrum**
 Secret Phrase for ETH Wallet: `spin vocal tortoise chest ignore zoo chief celery diet engine auto divert`
 Web3 + API Key and Network:
 `https://arbitrum-sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
