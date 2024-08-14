@@ -109,10 +109,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="/ethereum"><i class="fab fa-ethereum me-1"></i>ETH</a>
-                    <a class="nav-link" href="/celo"><i class="fas fa-globe me-1"></i>CELO</a>
-                    <a class="nav-link" href="/bnb"><i class="fas fa-coins me-1"></i>BNB</a>
-                    <a class="nav-link" href="/arbitrum"><i class="fas fa-network-wired me-1"></i>ARB</a>
+                    <a class="nav-link active" href="/ethereum.html"><i class="fab fa-ethereum me-1"></i>ETH</a>
+                    <a class="nav-link" href="/celo.html"><i class="fas fa-globe me-1"></i>CELO</a>
+                    <a class="nav-link" href="/bnb.html"><i class="fas fa-coins me-1"></i>BNB</a>
+                    <a class="nav-link" href="/arbitrum.html"><i class="fas fa-network-wired me-1"></i>ARB</a>
                 </div>
             </div>
         </div>
@@ -173,22 +173,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script> <!-- Ensure correct Web3 version -->
+    <script src="/js/web3.min.js"></script>
     <script src="/js/hooked-web3-provider.min.js"></script>
     <script src="/js/lightwallet.min.js"></script>
     <script src="/js/ethereum-main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var video = document.getElementById('myVideo');
-    
-            // Restart the video after 27 seconds
-            setInterval(function() {
-                if (video.currentTime >= 27) {
-                    video.currentTime = 0; // Restart the video
-                    video.play(); // Ensure the video continues playing
-                }
-            }, 1000); // Check every second
-        });
-    </script>
 </body>
 </html>

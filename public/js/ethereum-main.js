@@ -2,79 +2,50 @@ var global_seed = undefined;
 
 // Generates a random 12-word seed and displays it in the seed element
 function generate_seed() {
-    try {
-        var create_seed = lightwallet.keystore.generateRandomSeed();
-        document.getElementById("seed").value = create_seed;
-        generate_addresses(create_seed);
-    } catch (err) {
-        console.error('Error generating seed:', err);
-        show_message('Error generating seed: ' + err.message, 'danger');
-    }
+    var create_seed = lightwallet.keystore.generateRandomSeed();
+    document.getElementById("seed").value = create_seed;
+    generate_addresses(create_seed);
 }
 
 var total_addresses = 0;
 
-// Generates addresses based on the given seed phrase
+/* Generates addresses based on the given seed phrase.
+   If no seed is provided, uses the seed value from the seed element in the HTML.
+   Validates the seed phrase and prompts the user for the number of addresses to generate.
+   Displays the generated addresses, private keys, and balances in a list.
+*/
 function generate_addresses(seed) {
-    try {
-        if (seed == undefined) {
-            seed = document.getElementById("seed").value;
-        }
+    if (seed == undefined) {
+        seed = document.getElementById("seed").value;
+    }
 
-        if (!lightwallet.keystore.isSeedValid(seed)) {
-            show_message("Please enter a valid seed", "danger");
-            return;
-        }
+    if (!lightwallet.keystore.isSeedValid(seed)) {
+        show_message("Please enter a valid seed", "danger");
+        return;
+    }
 
-        global_seed = seed;
-        total_addresses = prompt("How many addresses do you want to generate?");
-        if (!Number.isInteger(parseInt(total_addresses))) {
-            show_message("Please enter a valid number of addresses", "danger");
-            return;
-        }
+    global_seed = seed;
+    total_addresses = prompt("How many addresses do you want to generate?");
+    if (!Number.isInteger(parseInt(total_addresses))) {
+        show_message("Please enter a valid number of addresses", "danger");
+        return;
+    }
 
-        var password = Math.random().toString();
+    var password = Math.random().toString();
 
-        lightwallet.keystore.createVault({
-            password: password,
-            seedPhrase: seed,
-            hdPathString: "m/44'/60'/0'/0" // Ensure the derivation path is specified
-        }, function (err, ks) {
+    lightwallet.keystore.createVault({
+        password: password,
+        seedPhrase: seed
+    }, function (err, ks) {
+        ks.keyFromPassword(password, function (err, pwDerivedKey) {
             if (err) {
-                show_message(err.message || "Error creating vault", "danger");
-                return;
-            }
-
-            ks.keyFromPassword(password, function (err, pwDerivedKey) {
-                if (err) {
-                    show_message(err.message || "Error deriving key", "danger");
-                    return;
-                }
-
+                show_message(err, "danger");
+            } else {
                 ks.generateNewAddress(pwDerivedKey, total_addresses);
                 var addresses = ks.getAddresses();
 
-                // Initialize Web3
-                console.log("Initializing Web3...");
-                var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55'));
-
-                // Web3 Initialization Check
-                if (!web3) {
-                    show_message("Web3 is not initialized properly.", "danger");
-                    console.error("Web3 is not initialized properly.");
-                    return;
-                } else {
-                    console.log("Web3 is initialized properly.");
-                }
-
-                // Check if Web3 utils are available
-                if (!web3.utils) {
-                    show_message("Web3 utils are not available.", "danger");
-                    console.error("Web3 utils are not available.");
-                    return;
-                } else {
-                    console.log("Web3 utils are available.");
-                }
+                var web3 = new Web3(new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55')); // Derivation path here!!!!!!!!
+                var addresses_list = "";
 
                 Promise.all(addresses.map(function (address, index) {
                     return new Promise(function (resolve) {
@@ -90,7 +61,7 @@ function generate_addresses(seed) {
                                     <h4 class="mb-3">Address ${index + 1}</h4>
                                     <p><strong>Address:</strong> <span class="text-break">0x${address}</span></p>
                                     <p><strong>Private Key:</strong> <span class="text-break">0x${private_key}</span></p>
-                                    <p><strong>Balance:</strong> ${web3.utils.fromWei(balance.toString(), "ether")} ETH</p>
+                                    <p><strong>Balance:</strong> ${web3.fromWei(balance, "ether")} ETH</p>
                                 </div>
                             `);
                         });
@@ -99,77 +70,49 @@ function generate_addresses(seed) {
                     document.getElementById("addresses").innerHTML = addressItems.join('');
                     show_message(`Generated ${total_addresses} addresses successfully`, "success");
                 });
-            });
+            }
         });
-    } catch (err) {
-        console.error('Error generating addresses:', err);
-        show_message('Error generating addresses: ' + err.message, 'danger');
-    }
+    });
 }
 
+/* Sends a signed transaction between accounts.
+   Requires a 12-word seed phrase to be entered into the info textbox.
+   Uses the seed phrase to create a new address for the 'from' field.
+   Sends the specified amount of ethereum to the 'to' address.
+*/
 function send_ether() {
-    try {
-        var seed = global_seed;
-        if (seed == undefined) {
-            show_message("Please enter seed", "danger");
-            return;
-        }
-        if (!lightwallet.keystore.isSeedValid(seed)) {
-            show_message("Please enter a valid seed", "danger");
-            return;
-        }
-        var password = Math.random().toString();
-        lightwallet.keystore.createVault({
-            password: password,
-            seedPhrase: seed,
-            hdPathString: "m/44'/60'/0'/0" // Ensure the derivation path is specified
-        }, function (err, ks) {
+    var seed = global_seed;
+    if (seed == undefined) {
+        show_message("Please enter seed", "danger");
+        return;
+    }
+    if (!lightwallet.keystore.isSeedValid(seed)) {
+        show_message("Please enter a valid seed", "danger");
+        return;
+    }
+    var password = Math.random().toString();
+    lightwallet.keystore.createVault({
+        password: password,
+        seedPhrase: seed
+    }, function (err, ks) {
+        ks.keyFromPassword(password, function (err, pwDerivedKey) {
             if (err) {
-                show_message(err.message || "Error creating vault", "danger");
-                return;
-            }
-
-            ks.keyFromPassword(password, function (err, pwDerivedKey) {
-                if (err) {
-                    show_message(err.message || "Error deriving key", "danger");
-                    return;
-                }
-
+                show_message(err, "danger");
+            } else {
                 ks.generateNewAddress(pwDerivedKey, total_addresses);
 
                 ks.passwordProvider = function (callback) {
                     callback(null, password);
                 };
-
                 var provider = new HookedWeb3Provider({
                     host: "https://sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55",
                     transaction_signer: ks
                 });
 
                 var web3 = new Web3(provider);
-
-                // Web3 Initialization Check
-                if (!web3) {
-                    show_message("Web3 is not initialized properly.", "danger");
-                    console.error("Web3 is not initialized properly.");
-                    return;
-                } else {
-                    console.log("Web3 is initialized properly.");
-                }
-
-                // Check if Web3 utils are available
-                if (!web3.utils) {
-                    show_message("Web3 utils are not available.", "danger");
-                    console.error("Web3 utils are not available.");
-                    return;
-                } else {
-                    console.log("Web3 utils are available.");
-                }
-
                 var from = document.getElementById("sender").value;
                 var to = document.getElementById("receive").value;
-                var value = web3.utils.toWei(document.getElementById("ether").value, "ether");
-
+                var value = web3.toWei(document.getElementById("ether").value, "ether");
                 web3.eth.sendTransaction({
                     from: from,
                     to: to,
@@ -179,17 +122,14 @@ function send_ether() {
                     gas: '21000'
                 }, function (error, result) {
                     if (error) {
-                        show_message(error.message || "Error sending transaction", "danger");
+                        show_message(error, "danger");
                     } else {
                         show_message("Transaction sent successfully. Txn hash: " + result, "success");
                     }
-                });
-            });
+                })
+            }
         });
-    } catch (err) {
-        console.error('Error sending ether:', err);
-        show_message('Error sending ether: ' + err.message, 'danger');
-    }
+    });
 }
 
 function show_message(message, type) {
@@ -221,6 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.classList.remove('is-valid');
                 this.classList.add('is-invalid');
             }
-        });
-    });
+        });
+    });
 });
