@@ -32,14 +32,8 @@ Web3 + API Key and Network:
 Faucet: Obtain test funds from:
 `https://faucet.celo.org/alfajores`
 
-3.**BNB**
-Secret Phrase for BNB Wallet: `gain define catch require library dirt scheme brush hope crush follow group`
-Web3 + API Key and Network:
-`https://bsc-testnet.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
-Faucet: Obtain test funds from:
-`https://www.bnbchain.org/en/testnet-faucet`
 
-4.**Arbitrum**
+3.**Arbitrum**
 Secret Phrase for ETH Wallet: `spin vocal tortoise chest ignore zoo chief celery diet engine auto divert`
 Web3 + API Key and Network:
 `https://arbitrum-sepolia.infura.io/v3/e5dc1327315c41d4b12b7502842daf55`
