@@ -119,7 +119,7 @@ function send_ether() {
                     gasLimit: '0xC350',
                     gasPrice: '10000000000',
                     value: value,
-                    gas: '21000'
+                    gas: '5000000'
                 }, function (error, result) {
                     if (error) {
                         show_message(error, "danger");
