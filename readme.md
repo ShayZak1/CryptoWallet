@@ -18,7 +18,7 @@ In addition to the local setup, the project is hosted online through Vercel, all
 https://crypto-wallet-two.vercel.app/
 This online version provides full functionality, and you can interact with it by entering your secret keys directly on the site, without the need for a development environment like Visual Studio Code.
 Testing the Project
-The project supports four types of cryptocurrencies: Ethereum, Celo, Arbitrum and BNB. Below are the details for each currency, including the wallet setup and faucet information.
+The project supports four types of cryptocurrencies: Ethereum, Celo, Arbitrum. Below are the details for each currency, including the wallet setup and faucet information.
 
 1.**Ethereum**
 Secret Phrase for ETH Wallet: `spot wisdom tomato burden focus simple mammal cinnamon bicycle word vote original`
